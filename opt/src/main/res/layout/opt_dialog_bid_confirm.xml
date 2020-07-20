@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:gravity="center"
+        style="@style/TextAppearance.AppCompat.Button"
+        android:padding="8dp"
+        android:text="If the price increases at least by 0.01USD then you will get + 60% to your deposit"/>
+
+    <ImageView
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_gravity="center"
+        android:tint="@color/sender_recyclerview_background_green"
+        app:srcCompat="@drawable/ic_trending_up_24_px"/>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/opt_btn_green"
+        android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@android:string/ok"
+        android:textColor="@color/darkgrey"
+        android:layout_gravity="bottom"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+</FrameLayout>

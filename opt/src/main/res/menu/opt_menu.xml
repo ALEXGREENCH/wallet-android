@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/optDeposit"
+        android:title="@string/opt_deposit" />
+    <item
+        android:id="@+id/optWithdraw"
+        android:title="@string/opt_withdraw" />
+    <item
+        android:id="@+id/optHistory"
+        android:title="@string/opt_history" />
+    <item
+        android:id="@+id/optSupport"
+        android:title="@string/opt_support" />
+    <item
+        android:id="@+id/optHelp"
+        android:title="@string/opt_how_to_play" />
+
+</menu>

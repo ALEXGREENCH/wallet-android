@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/opt_currency_btc"
+        android:title="@string/opt_btc" />
+    <item android:id="@+id/opt_currency_usd"
+        android:title="@string/opt_usd" />
+</menu>

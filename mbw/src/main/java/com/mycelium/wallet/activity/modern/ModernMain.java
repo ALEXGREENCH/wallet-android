@@ -119,6 +119,7 @@ public class ModernMain extends AppCompatActivity {
     private static final String TAB_ADS = "tab_ads";
     private static final String TAB_RECOMMENDATIONS = "tab_recommendations";
     private static final String TAB_ADDRESS_BOOK = "tab_address_book";
+    private static final String TAB_BIN_OP = "tab_opt";
 
     private static final int REQUEST_SETTING_CHANGED = 5;
     public static final int MIN_AUTOSYNC_INTERVAL = (int) Constants.MS_PR_MINUTE;
@@ -133,6 +134,7 @@ public class ModernMain extends AppCompatActivity {
     TabLayout.Tab mNewsTab;
     TabLayout.Tab mAccountsTab;
     TabLayout.Tab mRecommendationsTab;
+    TabLayout.Tab binOpTab;
     private MenuItem refreshItem;
     private Toaster _toaster;
     private volatile long _lastSync = 0;
@@ -178,6 +180,8 @@ public class ModernMain extends AppCompatActivity {
         mTabsAdapter.addTab(tabLayout.newTab().setText(getString(R.string.tab_addresses)), AddressBookFragment.class,
                 addressBookConfig, TAB_ADDRESS_BOOK);
         addAdsTabs(tabLayout);
+        binOpTab = tabLayout.newTab().setText(getString(R.string.opt_tab));
+        mTabsAdapter.addTab(binOpTab, OptBaseFragment.class, null, TAB_BIN_OP);
         if (SettingsPreference.getMediaFlowEnabled() &&
                 Objects.equals(getIntent().getAction(), "media_flow")) {
             mNewsTab.select();

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#050505">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp">
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/graph"
+                    android:layout_width="match_parent"
+                    android:layout_height="204dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BTC / USD"
+                    android:textStyle="bold"
+                    android:textSize="21sp"
+                    android:textColor="@android:color/white"
+                    android:shadowColor="#5A5A5A"
+                    android:shadowRadius="8"
+                    android:layout_margin="12dp"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/to2m"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/opt_2m"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/to5m"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/opt_5m"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/opt_bg_selected_time"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/to3h"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/opt_3h"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/to1d"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/opt_1d"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/to1mn"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/opt_1m" />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/to1y"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/opt_1y"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/toAll"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/opt_all"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="2dp">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/opt_available_balance"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="NaN"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/opt_bg_edittext_bet_amount"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    tools:ignore="NestedWeights"
+                    app:hintTextColor="@android:color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="@string/opt_enter_amount_of_your_bet"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:paddingStart="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <FrameLayout
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#BFFFFFFF" />
+
+                <FrameLayout
+                    android:id="@+id/currency_spinner"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/currency_spinner_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="BTC"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                        android:textSize="21sp"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+                <LinearLayout
+                    android:id="@+id/button_up"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/opt_btn_green"
+                    android:gravity="center"
+                    app:elevation="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/opt_btc_goes"
+                        android:textSize="21sp"
+                        android:textColor="@android:color/white"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_baseline_arrow_upward_24"
+                        android:tint="@android:color/white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/button_down"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/opt_btn_red"
+                    android:gravity="center"
+                    app:elevation="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/opt_btc_goes"
+                        android:textSize="21sp"
+                        android:textColor="@android:color/white"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_baseline_arrow_downward_24"
+                        android:tint="@android:color/white"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--
+            <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <Button
+                android:id="@+id/deposit_button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/opt_btn_green"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Deposit"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/withdraw_button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/opt_btn_red"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Withdraw"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+        </LinearLayout>
+            -->
+
+            <!--
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll2">
+
+                <Button
+                    android:id="@+id/history_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/fee_recycler_item"
+                    android:text="History" />
+
+                <Button
+                    android:id="@+id/status"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/fee_recycler_item"
+                    android:text="Open bets" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/frgmCont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"/>
+        -->
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/llProgressBar"
+        layout="@layout/opt_fragment_graph_shimmer"
+        android:visibility="gone" />
+
+</FrameLayout>

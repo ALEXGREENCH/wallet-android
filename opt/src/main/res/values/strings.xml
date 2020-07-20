@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="opt_deposit">Deposit</string>
+    <string name="opt_withdraw">Withdraw</string>
+    <string name="opt_history">History</string>
+    <string name="opt_support">Support</string>
+    <string name="opt_how_to_play">How to play?</string>
+
+    <string name="opt_tab">Game</string>
+    <string name="opt_title_select_currency">Select currency for bets</string>
+    <string name="opt_title_dialog_deposit">Deposit</string>
+    <string name="opt_enter_amount_of_your_bet">Enter amount of your bet</string>
+    <string name="opt_btc_goes">BTC GOES</string>
+    <string name="opt_available_balance">Available Balance:</string>
+    <string name="opt_2m">2m</string>
+    <string name="opt_5m">5m</string>
+    <string name="opt_3h">3h</string>
+    <string name="opt_1d">1D</string>
+    <string name="opt_1m">1M</string>
+    <string name="opt_1y">1Y</string>
+    <string name="opt_all">ALL</string>
+    <string name="opt_updating_market_data">Updating market data...</string>
+    <string name="opt_enter_amount_of_your_deposit">Enter amount of your deposit</string>
+    <string name="opt_btc">BTC</string>
+    <string name="opt_usd">USD</string>
+</resources>
