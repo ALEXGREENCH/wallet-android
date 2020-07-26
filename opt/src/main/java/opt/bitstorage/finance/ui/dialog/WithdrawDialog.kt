@@ -1,4 +1,4 @@
-package opt.bitstorage.finance.ui
+package opt.bitstorage.finance.ui.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -8,8 +8,9 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import okhttp3.OkHttpClient
 import opt.bitstorage.finance.R
+import opt.bitstorage.finance.common.IWithdraw
 
-class WithdrawDialogFragment : DialogFragment() {
+class WithdrawDialog : DialogFragment() {
 
     //companion object {
     //    const val KEY_TOKEN = "Token"

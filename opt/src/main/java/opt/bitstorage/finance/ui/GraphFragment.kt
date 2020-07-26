@@ -8,7 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.jjoe64.graphview.DefaultLabelFormatter
@@ -24,6 +27,7 @@ import opt.bitstorage.finance.net.model.EmptyObj
 import opt.bitstorage.finance.net.model.OptBets
 import opt.bitstorage.finance.ui.dialog.BidInfoDialog
 import opt.bitstorage.finance.ui.dialog.DepositDialog
+import opt.bitstorage.finance.ui.dialog.WithdrawDialog
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -37,7 +41,7 @@ import java.util.*
 import kotlin.math.ceil
 
 open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
-        Fragment(R.layout.opt_fragment_graph), IPreparationUserData, IDeposit {
+        Fragment(R.layout.opt_fragment_graph), IPreparationUserData, IDeposit, IWithdraw {
 
     private var timeLine = 600.0 * 1000
     private var userId: String? = null
@@ -67,7 +71,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         depositDialogFragment = DepositDialog(this)
-        withdrawDialogFragment = WithdrawDialogFragment()
+        withdrawDialogFragment = WithdrawDialog()
     }
 
     private fun getChart() {
@@ -368,13 +372,12 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
     }
 
     private fun cleanStateControl(){
-        to2m.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        to5m.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        to3h.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        to1d.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        to1mn.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        to1y.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        toAll.setBackgroundColor(resources.getColor(android.R.color.transparent))
+        arrayListOf(
+                to2m, to5m, to3h, to1d, to1mn, to1y, toAll
+        ).forEach {
+            it.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                    android.R.color.transparent))
+        }
     }
 
     private fun changeGraphSize(){
@@ -399,7 +402,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
         series?.color = Color.rgb(240, 240, 240)
         series?.setAnimated(true)
         series?.isDrawBackground = true
-        series?.backgroundColor = Color.argb(70,196, 196, 196)
+        //series?.backgroundColor = Color.argb(70,196, 196, 196)
         series?.thickness = 2
 
         graph.viewport.computeScroll()
@@ -429,7 +432,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
             }
             R.id.optSupport -> {
                 val intent = Intent(requireContext(), SupportActivity::class.java)
-                intent.putExtra("ID", userId)
+                intent.putExtra(SupportActivity.EXTRA_ID_SUPPORT, userId)
                 requireActivity().startActivity(intent)
             }
             R.id.optHelp -> {
@@ -570,6 +573,10 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
 
     override fun deposit(amount: String) {
         optBaseFragment.deposit(amount)
+    }
+
+    override fun withdraw(value: String, wallet: String) {
+        optBaseFragment.withdraw(value, wallet)
     }
 
 }

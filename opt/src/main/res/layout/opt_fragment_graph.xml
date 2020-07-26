@@ -31,11 +31,89 @@
                     android:text="BTC / USD"
                     android:textStyle="bold"
                     android:textSize="21sp"
-                    android:textColor="@android:color/white"
+                    android:textColor="#FFFFFF"
                     android:shadowColor="#5A5A5A"
                     android:shadowRadius="8"
                     android:layout_margin="12dp"/>
             </FrameLayout>
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/opt_2m"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:text="@string/opt_5m"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/opt_3h"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/opt_1d"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/opt_1m"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/opt_1y"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+
+                <RadioButton
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/opt_all"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/radiobutton_selector"/>
+            </RadioGroup>
 
             <LinearLayout
                 android:layout_width="match_parent"

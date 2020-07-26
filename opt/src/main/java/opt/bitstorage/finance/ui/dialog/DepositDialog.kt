@@ -9,10 +9,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.opt_fragment_graph.*
 import opt.bitstorage.finance.R
 import opt.bitstorage.finance.common.IDeposit
-import opt.bitstorage.finance.ui.GraphFragment
 
 class DepositDialog(val deposit: IDeposit) : DialogFragment() {
 

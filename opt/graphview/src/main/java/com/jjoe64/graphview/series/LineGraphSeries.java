@@ -18,9 +18,12 @@ package com.jjoe64.graphview.series;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import androidx.core.view.ViewCompat;
+
+import android.graphics.Shader;
 import android.view.animation.AccelerateInterpolator;
 
 import com.jjoe64.graphview.GraphView;
@@ -170,7 +173,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
      */
     protected void init() {
         mStyles = new Styles();
-        mPaint = new Paint();
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaintBackground = new Paint();
@@ -220,7 +223,8 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         // draw data
         mPaint.setStrokeWidth(mStyles.thickness);
         mPaint.setColor(getColor());
-        mPaintBackground.setColor(mStyles.backgroundColor);
+
+        //mPaintBackground.setColor(mStyles.backgroundColor);
 
         Paint paint;
         if (mCustomPaint != null) {
@@ -242,6 +246,15 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         float graphWidth = graphView.getGraphContentWidth();
         float graphLeft = graphView.getGraphContentLeft();
         float graphTop = graphView.getGraphContentTop();
+
+        Path pth = new Path();
+        pth.moveTo(graphWidth*0.27f,0);
+        pth.lineTo(graphWidth*0.73f,0);
+        pth.lineTo(graphWidth*0.92f,graphHeight);
+        pth.lineTo(graphWidth*0.08f,graphHeight);
+        pth.lineTo(graphWidth*0.27f,0);
+        mPaintBackground.setColor(0xff800000);
+        mPaintBackground.setShader(new LinearGradient(0, 0, 0, graphHeight, 0x65393939,0x65CCCCCC,Shader.TileMode.CLAMP));
 
         lastEndY = 0;
         lastEndX = 0;

@@ -19,8 +19,16 @@
     <string name="opt_1m">1M</string>
     <string name="opt_1y">1Y</string>
     <string name="opt_all">ALL</string>
-    <string name="opt_updating_market_data">Updating market data...</string>
+    <string name="opt_updating_market_data">Updating market data…</string>
     <string name="opt_enter_amount_of_your_deposit">Enter amount of your deposit</string>
     <string name="opt_btc">BTC</string>
     <string name="opt_usd">USD</string>
+
+    <string name="opt_title_user_id">USER ID:  %1$s</string>
+    <string name="opt_support_email">support@bitstorage.finance</string>
+    <string name="opt_email_scheme">mailto</string>
+    <string name="opt_title_send_email">Send email…</string>
+    <string name="opt_link_telegram">https://t.me/</string>
+    <string name="opt_support_telegram_chat">bitstorage</string>
+    <string name="opt_support_freshdesk">https://bitstorage.freshdesk.com/support/home</string>
 </resources>

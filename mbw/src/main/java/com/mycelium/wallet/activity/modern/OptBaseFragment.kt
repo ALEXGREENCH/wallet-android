@@ -150,6 +150,10 @@ open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseFragm
         })
     }
 
+    override fun withdraw(amount: String, wallet: String) {
+
+    }
+
     private fun handlePaymentRequest(bytes: GenericAssetUri?) {
         var spendingAccounts = manager?.getWalletManager(false)!!.getSpendingAccountsWithBalance()
         if (spendingAccounts.isEmpty()) {
