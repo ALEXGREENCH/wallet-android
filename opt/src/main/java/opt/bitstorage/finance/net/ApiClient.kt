@@ -16,12 +16,12 @@ class ApiClient {
         private var mInstance: ApiClient? = null
         private var token: String? = null
 
-        fun getInstance(token: String = ""): ApiClient? {
+        fun getInstance(token: String = ""): ApiClient {
             if (mInstance == null) {
                 mInstance = ApiClient()
             }
             ApiClient.token = token
-            return mInstance
+            return mInstance!!
         }
     }
 

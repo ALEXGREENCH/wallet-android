@@ -1,17 +1,15 @@
 package opt.bitstorage.finance.net
 
 import okhttp3.ResponseBody
-import opt.bitstorage.finance.net.model.Deposit
-import opt.bitstorage.finance.net.model.EmptyObj
-import opt.bitstorage.finance.net.model.OptBets
-import opt.bitstorage.finance.net.model.Withdraw
+import opt.bitstorage.finance.net.model.*
+import opt.bitstorage.finance.net.model.chart.Chart
 import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
 
     @GET("chart")
-    fun getChart(): Call<ResponseBody>
+    fun getChart(): Call<Chart>
 
     @GET("balance")
     fun getBalance(): Call<ResponseBody>

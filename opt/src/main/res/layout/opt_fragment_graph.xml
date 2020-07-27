@@ -34,200 +34,94 @@
                     android:textColor="#FFFFFF"
                     android:shadowColor="#5A5A5A"
                     android:shadowRadius="8"
-                    android:layout_margin="12dp"/>
+                    android:layout_margin="12dp" />
             </FrameLayout>
 
-
-            <RadioGroup
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:text="@string/opt_2m"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:padding="8dp"
-                    android:text="@string/opt_5m"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:text="@string/opt_3h"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:text="@string/opt_1d"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:text="@string/opt_1m"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:text="@string/opt_1y"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-
-                <RadioButton
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:text="@string/opt_all"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/radiobutton_selector"/>
-            </RadioGroup>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-                <FrameLayout
-                    android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <opt.bitstorage.finance.common.view.RadioGridLayout
+                    android:id="@+id/group_rb_to_time"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/to2m"
+                    android:layout_gravity="center_horizontal"
+                    android:alignmentMode="alignBounds"
+                    android:columnCount="7"
+                    android:rowOrderPreserved="false">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_2min"
                         android:layout_width="46dp"
                         android:layout_height="46dp"
-                        android:layout_gravity="center"
+                        android:background="@drawable/opt_radiobutton_selector"
+                        android:text="@string/opt_2m"
                         android:gravity="center"
-                        android:padding="8dp"
-                        android:textSize="14sp"
                         android:textColor="@android:color/white"
-                        android:text="@string/opt_2m"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                        android:button="@null" />
 
-                    <TextView
-                        android:id="@+id/to5m"
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_5min"
                         android:layout_width="46dp"
                         android:layout_height="46dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:button="@null"
                         android:padding="8dp"
                         android:text="@string/opt_5m"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/opt_bg_selected_time"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/to3h"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:layout_gravity="center"
+                        android:background="@drawable/opt_radiobutton_selector"
                         android:gravity="center"
-                        android:padding="8dp"
-                        android:textSize="14sp"
                         android:textColor="@android:color/white"
-                        android:text="@string/opt_3h"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/to1d"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/white"
-                        android:text="@string/opt_1d"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                        android:checked="true" />
 
-                    <TextView
-                        android:id="@+id/to1mn"
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_3hour"
                         android:layout_width="46dp"
                         android:layout_height="46dp"
-                        android:layout_gravity="center"
+                        android:button="@null"
+                        android:text="@string/opt_3h"
                         android:gravity="center"
-                        android:padding="8dp"
-                        android:textSize="14sp"
                         android:textColor="@android:color/white"
-                        android:text="@string/opt_1m" />
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/to1y"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/white"
-                        android:text="@string/opt_1y"/>
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                        android:background="@drawable/opt_radiobutton_selector" />
 
-                    <TextView
-                        android:id="@+id/toAll"
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_1day"
                         android:layout_width="46dp"
                         android:layout_height="46dp"
-                        android:layout_gravity="center"
+                        android:button="@null"
+                        android:text="@string/opt_1d"
                         android:gravity="center"
-                        android:padding="8dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/opt_radiobutton_selector" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_1month"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:button="@null"
+                        android:text="@string/opt_1m"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/opt_radiobutton_selector" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_1year"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:button="@null"
+                        android:text="@string/opt_1y"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/opt_radiobutton_selector" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/to_all"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/opt_radiobutton_selector"
                         android:text="@string/opt_all"
+                        android:gravity="center"
                         android:textColor="@android:color/white"
-                        android:textSize="14sp" />
-                </FrameLayout>
-            </LinearLayout>
+                        android:button="@null" />
+                </opt.bitstorage.finance.common.view.RadioGridLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -249,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="NaN"
+                    android:text="@string/opt_nan"
                     android:textAlignment="viewStart"
                     android:textSize="16sp" />
             </LinearLayout>

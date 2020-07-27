@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.jjoe64.graphview.DefaultLabelFormatter
@@ -22,7 +19,9 @@ import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import opt.bitstorage.finance.R
 import opt.bitstorage.finance.common.*
+import opt.bitstorage.finance.common.view.RadioGridLayout
 import opt.bitstorage.finance.net.ApiClient
+import opt.bitstorage.finance.net.model.chart.Chart
 import opt.bitstorage.finance.net.model.EmptyObj
 import opt.bitstorage.finance.net.model.OptBets
 import opt.bitstorage.finance.ui.dialog.BidInfoDialog
@@ -40,8 +39,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.ceil
 
-open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
-        Fragment(R.layout.opt_fragment_graph), IPreparationUserData, IDeposit, IWithdraw {
+open class GraphFragment(private val optBaseContract: IOptBaseContract) :
+        Fragment(R.layout.opt_fragment_graph), IPrepareData, IDeposit, IWithdraw {
 
     private var timeLine = 600.0 * 1000
     private var userId: String? = null
@@ -75,6 +74,43 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
     }
 
     private fun getChart() {
+        ApiClient.getInstance(String(token!!)).getService().getChart().enqueue(object : Callback<Chart>{
+            override fun onFailure(call: Call<Chart>, t: Throwable) {
+                Log.i("TAG", "response error -> ${t.localizedMessage}")
+            }
+
+            override fun onResponse(call: Call<Chart>, response: Response<Chart>) {
+                val code = response.code()
+                Log.i("TAG", "response code -> $code")
+                if (code != 200) return
+
+                val balanceResponse = response.body()
+                val dataList = balanceResponse!!.opt.first().data
+
+                Log.i("TAG", "data -> $dataList")
+
+                // последний с датой
+                val sizeGraphArray = dataList.size - 1
+
+                x = DoubleArray(sizeGraphArray)
+                y = DoubleArray(sizeGraphArray)
+
+                for (i in 0 until sizeGraphArray){
+                    x!![i] = dataList[i][0].toString().toDouble()
+                    y!![i] = dataList[i][1].toString().toDouble()
+                }
+
+                val dataRaw = dataList.last()[0].toString()
+                Log.i("TAG", "raw data = $dataRaw")
+
+                if (isVisible){
+                    updateUI()
+                }
+            }
+
+        })
+
+        /*
         ApiClient.getInstance(token = String(token!!))!!.getService().getChart().enqueue(
                 object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -105,6 +141,8 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                     }
                 }
         )
+
+         */
     }
 
     private fun getBalance() {
@@ -113,7 +151,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
             return
         }
 
-        ApiClient.getInstance(token = String(token!!))!!.getService().getBalance().enqueue(object : Callback<ResponseBody> {
+        ApiClient.getInstance(token = String(token!!)).getService().getBalance().enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 //
             }
@@ -164,7 +202,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
     }
 
     private fun setGetBitId() {
-        ApiClient.getInstance()!!.getService().postBitID(EmptyObj()).enqueue(object : Callback<ResponseBody> {
+        ApiClient.getInstance().getService().postBitID(EmptyObj()).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 //
             }
@@ -178,7 +216,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 val obj = JSONObject(strJson)
                 val data = obj.getString("bitid")
 
-                optBaseFragment.executeBitIdAsyncTask(Uri.parse(data))
+                optBaseContract.executeBitIdAsyncTask(Uri.parse(data))
             }
         })
     }
@@ -194,8 +232,8 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
 
         val buttonMethod: String = if (but) "buy" else "sell"
 
-        ApiClient.getInstance(token = String(token!!))!!.getService()
-                .postOptBets(OptBets(amount = amount, bet_type = buttonMethod))
+        ApiClient.getInstance(token = String(token!!)).getService()
+                .postOptBets(OptBets(amount = amount, betType = buttonMethod))
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         if (isVisible) {
@@ -203,7 +241,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                                 llProgressBar.visibility = View.GONE
                                 root.isClickable = true
                                 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                                optBaseFragment.showToast(t.localizedMessage, true)
+                                optBaseContract.showToast(t.localizedMessage, true)
                             }
                         }
                     }
@@ -212,7 +250,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                         if (response.code() != 200) return
                         if (isVisible) {
                             GlobalScope.launch(Dispatchers.Main) {
-                                optBaseFragment.showToast("$buttonMethod Success", true)
+                                optBaseContract.showToast("$buttonMethod Success", true)
                                 llProgressBar.visibility = View.GONE
                                 root.isClickable = true
                                 getBalance()
@@ -243,7 +281,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 }
 
 
-                bidInfoDialog = BidInfoDialog.getInstance(object : IBidConfirm {
+                bidInfoDialog = BidInfoDialog.getInstance(object : IBid {
                     override fun confirm() {
                         GlobalScope.launch {
                             sendPost(but, amount)
@@ -252,7 +290,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 }, but, amount)
                 bidInfoDialog.show(fragmentManager?.beginTransaction()!!, "bid_info")
             } else {
-                optBaseFragment.showToast("Input amount", true)
+                optBaseContract.showToast("Input amount", true)
             }
         }
         button_down.setOnClickListener {
@@ -270,7 +308,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 if (amount.toDouble() >= balanceTxt) {
                     return@setOnClickListener
                 }
-                bidInfoDialog = BidInfoDialog.getInstance(object : IBidConfirm {
+                bidInfoDialog = BidInfoDialog.getInstance(object : IBid {
                     override fun confirm() {
                         GlobalScope.launch {
                             sendPost(but, amount)
@@ -281,7 +319,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 // todo...
                 bidInfoDialog.show(fragmentManager?.beginTransaction()!!, "bid_info")
             } else {
-                optBaseFragment.showToast("Input amount", false)
+                optBaseContract.showToast("Input amount", false)
             }
         }
         controlSize()
@@ -298,7 +336,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 }
             }
 
-            changeGraphSize()
+            updateGraph()
 
             // hide
             gridLabelRenderer.isVerticalLabelsVisible = false
@@ -330,57 +368,38 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
     }
 
     private fun controlSize() {
-        to2m.setOnClickListener {
-            cleanStateControl()
-            it.setBackgroundResource(R.drawable.opt_bg_selected_time)
-            timeLine = 120.0 * 1000
-            changeGraphSize()
-        }
-        to5m.setOnClickListener {
-            cleanStateControl()
-            it.setBackgroundResource(R.drawable.opt_bg_selected_time)
-            timeLine = 300.0 * 1000
-            changeGraphSize()
-        }
-        to3h.setOnClickListener {
-            cleanStateControl()
-            it.setBackgroundResource(R.drawable.opt_bg_selected_time)
-            timeLine = 3600.0 * 1000
-            changeGraphSize()
-        }
-        to1d.setOnClickListener {
-            cleanStateControl()
-            it.setBackgroundResource(R.drawable.opt_bg_selected_time)
-            timeLine = 86400.0 * 1000
-            changeGraphSize()
-        }
-        to1mn.setOnClickListener {
-            cleanStateControl()
-            it.setBackgroundResource(R.drawable.opt_bg_selected_time)
-            timeLine = 2592000.0 * 1000
-            changeGraphSize()
-        }
-        to1y.setOnClickListener {
-            cleanStateControl()
-            it.setBackgroundResource(R.drawable.opt_bg_selected_time)
-            timeLine = 31536000.0 * 1000
-            changeGraphSize()
-        }
-        toAll.setOnClickListener {
-            changeGraphSize()
-        }
+        group_rb_to_time.setOnCheckedChangeListener(object : RadioGridLayout.OnCheckedChangeListener{
+            override fun onCheckedChanged(group: RadioGridLayout?, checkedId: Int) {
+                when(group?.checkedRadioButtonId){
+                    R.id.to_2min -> {
+                        timeLine = 120.0 * 1000
+                    }
+                    R.id.to_5min -> {
+                        timeLine = 300.0 * 1000
+                    }
+                    R.id.to_3hour -> {
+                        timeLine = 3600.0 * 1000
+                    }
+                    R.id.to_1day -> {
+                        timeLine = 86400.0 * 1000
+                    }
+                    R.id.to_1month -> {
+                        timeLine = 2592000.0 * 1000
+                    }
+                    R.id.to_1year -> {
+                        timeLine = 31536000.0 * 1000
+                    }
+                    R.id.to_all -> {
+
+                    }
+                }
+                updateGraph()
+            }
+
+        })
     }
 
-    private fun cleanStateControl(){
-        arrayListOf(
-                to2m, to5m, to3h, to1d, to1mn, to1y, toAll
-        ).forEach {
-            it.setBackgroundColor(ContextCompat.getColor(requireContext(),
-                    android.R.color.transparent))
-        }
-    }
-
-    private fun changeGraphSize(){
+    private fun updateGraph(){
         val tsLong = System.currentTimeMillis()
         graph.viewport.setMinX(tsLong - timeLine)
         graph.viewport.setMaxX(tsLong.toDouble())
@@ -458,12 +477,12 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
     }
 
     fun toUSD(v: BigDecimal): BigDecimal {
-        val c = optBaseFragment.getPriceBitcoin()
+        val c = optBaseContract.getPriceBitcoin()
         return (v * c).setScale(2, RoundingMode.HALF_UP)
     }
 
     private fun getUSD(v: BigDecimal): BigDecimal {
-        val c = optBaseFragment.getPriceBitcoin()
+        val c = optBaseContract.getPriceBitcoin()
         return (v / c).setScale(8, RoundingMode.HALF_UP)
     }
 
@@ -514,7 +533,7 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
                 viewport.isScrollable = true // enables horizontal scrolling
             }
 
-            changeGraphSize()
+            updateGraph()
         }
     }
 
@@ -571,12 +590,12 @@ open class GraphFragment(private val optBaseFragment: IOptBaseFragment) :
         private var currentCurrency: String = "BTC"
     }
 
-    override fun deposit(amount: String) {
-        optBaseFragment.deposit(amount)
+    override fun send(amount: String) {
+        optBaseContract.deposit(amount)
     }
 
-    override fun withdraw(value: String, wallet: String) {
-        optBaseFragment.withdraw(value, wallet)
+    override fun send(value: String, wallet: String) {
+        optBaseContract.withdraw(value, wallet)
     }
 
 }

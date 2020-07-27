@@ -1,5 +1,5 @@
 package opt.bitstorage.finance.common
 
-interface IBidConfirm {
+interface IBid {
     fun confirm()
 }

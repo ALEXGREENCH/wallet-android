@@ -52,7 +52,7 @@ class DepositDialog(val deposit: IDeposit) : DialogFragment() {
 
         builder.setView(view)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    deposit.deposit(valueTI.editText!!.text.toString())
+                    deposit.send(valueTI.editText!!.text.toString())
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog, _ ->
                     dialog.cancel()

@@ -1,9 +1,16 @@
 package opt.bitstorage.finance.net.model
 
+import com.google.gson.annotations.SerializedName
+
 data class OptBets(
+        @SerializedName("currency")
         var currency: String = "USD",
-        var c_currency: String = "BTC",
+        @SerializedName("c_currency")
+        var cCurrency: String = "BTC",
+        @SerializedName("amount")
         var amount: String,
+        @SerializedName("curname")
         var curname: String = "BTC",
-        var bet_type: String
+        @SerializedName("bet_type")
+        var betType: String
 )

@@ -3,7 +3,7 @@ package opt.bitstorage.finance.common
 import android.net.Uri
 import java.math.BigDecimal
 
-interface IOptBaseFragment {
+interface IOptBaseContract {
     fun executeBitIdAsyncTask(data: Uri)
     fun getPriceBitcoin(): BigDecimal
     fun deposit(amount: String)

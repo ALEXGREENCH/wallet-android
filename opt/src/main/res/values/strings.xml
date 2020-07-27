@@ -31,4 +31,5 @@
     <string name="opt_link_telegram">https://t.me/</string>
     <string name="opt_support_telegram_chat">bitstorage</string>
     <string name="opt_support_freshdesk">https://bitstorage.freshdesk.com/support/home</string>
+    <string name="opt_nan">NaN</string>
 </resources>

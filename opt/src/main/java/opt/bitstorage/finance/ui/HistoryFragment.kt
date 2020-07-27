@@ -57,7 +57,7 @@ class HistoryFragment(private val bytes: ByteArray) : DialogFragment() {
 
     private fun getHistory(){
         val token = String(bytes)
-        ApiClient.getInstance(token)!!.getService().getHistory().enqueue(object : Callback<ResponseBody>{
+        ApiClient.getInstance(token).getService().getHistory().enqueue(object : Callback<ResponseBody>{
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 //
             }

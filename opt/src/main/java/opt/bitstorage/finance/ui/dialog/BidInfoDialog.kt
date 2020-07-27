@@ -11,16 +11,16 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import opt.bitstorage.finance.common.IBidConfirm
+import opt.bitstorage.finance.common.IBid
 import opt.bitstorage.finance.R
 
-class BidInfoDialog(val bidConfirm: IBidConfirm, val bid: Boolean, val amount: String) : DialogFragment() {
+class BidInfoDialog(val bidConfirm: IBid, val bid: Boolean, val amount: String) : DialogFragment() {
 
     companion object{
 
         private var mInstance: BidInfoDialog? = null
 
-        fun getInstance(bidConfirm: IBidConfirm, bid: Boolean, amount: String): BidInfoDialog {
+        fun getInstance(bidConfirm: IBid, bid: Boolean, amount: String): BidInfoDialog {
             if (mInstance == null) {
                 mInstance = BidInfoDialog(bidConfirm, bid, amount)
             }

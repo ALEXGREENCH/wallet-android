@@ -1,5 +1,5 @@
 package opt.bitstorage.finance.common
 
-interface IPreparationUserData{
+interface IPrepareData{
     fun complete(token: ByteArray, userId: String)
 }

@@ -224,6 +224,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         mPaint.setStrokeWidth(mStyles.thickness);
         mPaint.setColor(getColor());
 
+        // TODO:
         //mPaintBackground.setColor(mStyles.backgroundColor);
 
         Paint paint;
@@ -247,6 +248,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         float graphLeft = graphView.getGraphContentLeft();
         float graphTop = graphView.getGraphContentTop();
 
+        // todo: hardcode
         Path pth = new Path();
         pth.moveTo(graphWidth*0.27f,0);
         pth.lineTo(graphWidth*0.73f,0);
@@ -254,7 +256,7 @@ public class LineGraphSeries<E extends DataPointInterface> extends BaseSeries<E>
         pth.lineTo(graphWidth*0.08f,graphHeight);
         pth.lineTo(graphWidth*0.27f,0);
         mPaintBackground.setColor(0xff800000);
-        mPaintBackground.setShader(new LinearGradient(0, 0, 0, graphHeight, 0x65393939,0x65CCCCCC,Shader.TileMode.CLAMP));
+        mPaintBackground.setShader(new LinearGradient(0, 0, 0, graphHeight, 0x65FFFFFF,0x65393939,Shader.TileMode.CLAMP));
 
         lastEndY = 0;
         lastEndX = 0;

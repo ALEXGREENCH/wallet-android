@@ -1,5 +1,5 @@
 package opt.bitstorage.finance.common
 
 interface IDeposit {
-    fun deposit(amount: String)
+    fun send(amount: String)
 }

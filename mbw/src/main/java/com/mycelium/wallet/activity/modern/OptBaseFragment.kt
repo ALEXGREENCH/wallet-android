@@ -27,8 +27,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import opt.bitstorage.finance.ui.GraphFragment
-import opt.bitstorage.finance.common.IOptBaseFragment
-import opt.bitstorage.finance.common.IPreparationUserData
+import opt.bitstorage.finance.common.IOptBaseContract
+import opt.bitstorage.finance.common.IPrepareData
 import opt.bitstorage.finance.net.ApiClient
 import opt.bitstorage.finance.net.model.Deposit
 import org.json.JSONException
@@ -38,7 +38,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.math.BigDecimal
 
-open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseFragment {
+open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseContract {
 
     private var token: ByteArray? = null
     private var userId: String? = null
@@ -52,7 +52,7 @@ open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseFragm
     private val eventBus: Bus
         get() = MbwManager.getEventBus()
 
-    private var preparationUserData: IPreparationUserData? = null
+    private var prepareData: IPrepareData? = null
     var graphFragment: GraphFragment? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,7 +60,7 @@ open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseFragm
         toaster = Toaster(this)
 
         graphFragment = GraphFragment(this)
-        preparationUserData = graphFragment
+        prepareData = graphFragment
         graphFragment?.let { fragment ->
             childFragmentManager.beginTransaction().add(R.id.opt_root_view, fragment).commit()
         }
@@ -183,7 +183,7 @@ open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseFragm
             token = obj.getString("reason").toByteArray()
             userId = obj.getString("userid")
             if (token != null && userId != null) {
-                preparationUserData?.complete(token!!, userId!!)
+                prepareData?.complete(token!!, userId!!)
             }
         } catch (e: JSONException) {
         }
