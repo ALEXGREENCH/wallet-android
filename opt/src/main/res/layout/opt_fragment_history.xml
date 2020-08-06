@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<opt.bitstorage.finance.common.view.ExpandableHeightGridView
+<GridView
     android:id="@+id/gridview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:horizontalSpacing="16dp"
     android:numColumns="4"
-    android:isScrollContainer="false"
+    android:isScrollContainer="true"
     android:stretchMode="columnWidth"
     android:verticalSpacing="16dp"
-    android:background="@color/fee_recycler_item_selected" />
+    android:background="@color/opt_bg_history" />

@@ -34,13 +34,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="@string/opt_enter_amount_of_your_deposit"
+                android:hint="value"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
-                android:paddingStart="8dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="8dp"
+                android:padding="8dp"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 

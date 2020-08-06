@@ -39,14 +39,16 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
                 <opt.bitstorage.finance.common.view.RadioGridLayout
                     android:id="@+id/group_rb_to_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:alignmentMode="alignBounds"
                     android:columnCount="7"
+                    android:layout_gravity="center"
                     android:rowOrderPreserved="false">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
@@ -56,6 +58,7 @@
                         android:background="@drawable/opt_radiobutton_selector"
                         android:text="@string/opt_2m"
                         android:gravity="center"
+                        android:layout_margin="8dp"
                         android:textColor="@android:color/white"
                         android:button="@null" />
 
@@ -68,6 +71,7 @@
                         android:text="@string/opt_5m"
                         android:background="@drawable/opt_radiobutton_selector"
                         android:gravity="center"
+                        android:layout_margin="8dp"
                         android:textColor="@android:color/white"
                         android:checked="true" />
 

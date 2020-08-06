@@ -11,10 +11,11 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import opt.bitstorage.finance.R
 import opt.bitstorage.finance.common.IDeposit
+import opt.bitstorage.finance.ui.GraphFragment
 
 class DepositDialog(val deposit: IDeposit) : DialogFragment() {
 
-    private var currentCurrency: String = "BTC"
+    private var currentCurrency = GraphFragment.Companion.CURRENCY.USD
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -35,12 +36,12 @@ class DepositDialog(val deposit: IDeposit) : DialogFragment() {
                 when (item.itemId) {
                     R.id.opt_currency_btc -> {
                         currencySpinnerText.text = item.title
-                        currentCurrency = item.title.toString()
+                        currentCurrency = GraphFragment.Companion.CURRENCY.BTC
                         true
                     }
                     R.id.opt_currency_usd -> {
                         currencySpinnerText.text = item.title
-                        currentCurrency = item.title.toString()
+                        currentCurrency = GraphFragment.Companion.CURRENCY.USD
                         true
                     }
                     else -> false
@@ -52,7 +53,7 @@ class DepositDialog(val deposit: IDeposit) : DialogFragment() {
 
         builder.setView(view)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    deposit.send(valueTI.editText!!.text.toString())
+                    deposit.send(valueTI.editText!!.text.toString(), currentCurrency)
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog, _ ->
                     dialog.cancel()

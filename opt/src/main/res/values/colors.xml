@@ -5,4 +5,7 @@
     <color name="sender_recyclerview_background_selected_red">#fb827b</color>
     <color name="sender_recyclerview_background_green">#61b687</color>
     <color name="sender_recyclerview_background_selected2">#84c8a2</color>
+
+    <color name="opt_bg_history">#363d46</color>
+
 </resources>

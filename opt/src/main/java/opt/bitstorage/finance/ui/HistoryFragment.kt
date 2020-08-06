@@ -12,15 +12,14 @@ import android.view.Window
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.opt_fragment_history.*
-import okhttp3.ResponseBody
 import opt.bitstorage.finance.R
 import opt.bitstorage.finance.net.ApiClient
-import org.json.JSONArray
-import org.json.JSONException
+import opt.bitstorage.finance.net.model.history.History
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HistoryFragment(private val bytes: ByteArray) : DialogFragment() {
 
@@ -57,55 +56,43 @@ class HistoryFragment(private val bytes: ByteArray) : DialogFragment() {
 
     private fun getHistory(){
         val token = String(bytes)
-        ApiClient.getInstance(token).getService().getHistory().enqueue(object : Callback<ResponseBody>{
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                //
+        ApiClient.getInstance(token).getService().getHistory().enqueue(object : Callback<ArrayList<History>>{
+            override fun onFailure(call: Call<ArrayList<History>>, t: Throwable) {
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+                Log.i("TAG3", t.localizedMessage)
             }
 
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            override fun onResponse(call: Call<ArrayList<History>>, response: Response<ArrayList<History>>) {
                 if (response.code() != 200) return
-                val body = response.body()
-                val strJson = body!!.string()
-                Log.i("TAG", "strJson history -> $strJson")
+                val history = response.body()
 
-                // Парсер
-                try {
-                    val arr = JSONArray(strJson)
-                    for (i in 0 until arr.length()) {
-                        data!!.add(arr.getJSONObject(i).getDouble("bet_amount").toBigDecimal().toPlainString())
-
-                        var betType = arr.getJSONObject(i).getString("bet_type")
-                        betType = when(betType){
-                            "sell" -> {
-                                "down"
-                            }
-                            "buy" -> {
-                                "up"
-                            }
-                            else -> {
-                                betType
-                            }
+                for (item in history!!){
+                    Log.i("TAG3", item.bet_status)
+                    data!!.add(item.bet_amount.toBigDecimal().toPlainString())
+                    val betType = when(item.bet_type){
+                        "sell" -> {
+                            "down"
                         }
-
-                        data!!.add(betType) // sell -> down, buy -> up
-                        data!!.add(arr.getJSONObject(i).getString("bet_status"))
-
-                        var betPair = arr.getJSONObject(i).getString("bet_pair")
-                        if (betPair == "BTC_USD"){
-                            betPair = "BTC / USD"
+                        "buy" -> {
+                            "up"
                         }
-
-                        data!!.add(betPair)
+                        else -> {
+                            item.bet_type
+                        }
                     }
-                } catch (e: JSONException) {
-                    e.toString()
+                    data!!.add(betType)
+                    data!!.add(item.bet_status)
+                    var betPair = item.bet_pair
+                    if (betPair == "BTC_USD"){
+                        betPair = "BTC / USD"
+                    }
+                    data!!.add(betPair)
                 }
 
-                gridview.isExpanded = true
+                //gridview.isExpanded = true
                 val adapter = ArrayAdapter(requireContext(), R.layout.opt_item_table_simple, data!!)
                 gridview.adapter = adapter
             }
-
         })
     }
 }

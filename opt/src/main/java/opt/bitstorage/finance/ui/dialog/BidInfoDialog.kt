@@ -13,20 +13,21 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import opt.bitstorage.finance.common.IBid
 import opt.bitstorage.finance.R
+import java.math.BigDecimal
 
 class BidInfoDialog(val bidConfirm: IBid, val bid: Boolean, val amount: String) : DialogFragment() {
 
-    companion object{
-
-        private var mInstance: BidInfoDialog? = null
-
-        fun getInstance(bidConfirm: IBid, bid: Boolean, amount: String): BidInfoDialog {
-            if (mInstance == null) {
-                mInstance = BidInfoDialog(bidConfirm, bid, amount)
-            }
-            return mInstance!!
-        }
-    }
+    //companion object{
+//
+    //    private var mInstance: BidInfoDialog? = null
+//
+    //    fun getInstance(bidConfirm: IBid, bid: Boolean, amount: String): BidInfoDialog {
+    //        if (mInstance == null) {
+    //            mInstance = BidInfoDialog(bidConfirm, bid, amount)
+    //        }
+    //        return mInstance!!
+    //    }
+    //}
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog: Dialog = super.onCreateDialog(savedInstanceState)
@@ -51,10 +52,13 @@ class BidInfoDialog(val bidConfirm: IBid, val bid: Boolean, val amount: String) 
      val view = inflater.inflate(R.layout.opt_dialog_bid_confirm, container, false)
         val btnConfirm = view.findViewById<Button>(R.id.btn_confirm)
         val txt = view.findViewById<TextView>(R.id.txt)
+
+        val plus = amount.toBigDecimal().multiply((0.6).toBigDecimal()).toPlainString()
+
         if (!bid){
-            txt.text = "If the price decreases by at least 0.01USD, you will receive + ${amount.toDouble() * 0.6} btc to your deposit."
+            txt.text = "If the price decreases by at least 0.01USD, you will receive + $plus btc to your deposit."
         }else{
-            txt.text = "If the price increases by at least 0.01USD, you will receive + ${amount.toDouble() * 0.6} btc to your deposit."
+            txt.text = "If the price increases by at least 0.01USD, you will receive + $plus btc to your deposit."
         }
         btnConfirm.setOnClickListener {
             bidConfirm.confirm()

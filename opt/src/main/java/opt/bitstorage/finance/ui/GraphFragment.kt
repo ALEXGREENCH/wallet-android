@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.ceil
 
-open class GraphFragment(private val optBaseContract: IOptBaseContract) :
+open class GraphFragment :
         Fragment(R.layout.opt_fragment_graph), IPrepareData, IDeposit, IWithdraw {
 
     private var timeLine = 600.0 * 1000
@@ -60,17 +60,17 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
     private var series: LineGraphSeries<DataPoint?>? = LineGraphSeries()
     private var but = false
 
-    private lateinit var depositDialogFragment: DialogFragment
-    private lateinit var withdrawDialogFragment: DialogFragment
-    private lateinit var bidInfoDialog: BidInfoDialog
+    //private lateinit var depositDialogFragment: DialogFragment
+    //private lateinit var withdrawDialogFragment: DialogFragment
+    //private lateinit var bidInfoDialog: BidInfoDialog
 
     private val delayRequest = 15_000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        depositDialogFragment = DepositDialog(this)
-        withdrawDialogFragment = WithdrawDialog()
+        //depositDialogFragment = DepositDialog(this)
+        //withdrawDialogFragment = WithdrawDialog()
     }
 
     private fun getChart() {
@@ -107,42 +107,7 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
                     updateUI()
                 }
             }
-
         })
-
-        /*
-        ApiClient.getInstance(token = String(token!!))!!.getService().getChart().enqueue(
-                object : Callback<ResponseBody> {
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        //
-                    }
-
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        if (response.code() != 200) return
-                        val body = response.body()
-                        val strJson = body!!.string()
-                        Log.i("TAG", "strJson -> $strJson")
-
-                        val obj = JSONObject(strJson)
-                        val optArray = obj.getJSONArray("opt")
-                        val dataObject = optArray.getJSONObject(0)
-                        val dataArray = dataObject.getJSONArray("data")
-                        x = DoubleArray(dataArray.length() - 1)
-                        y = DoubleArray(dataArray.length() - 1)
-                        for (i in 0 until dataArray.length() - 1) {
-                            x!![i] = dataArray.getString(i).substring(1, 14).toDouble()
-                            y!![i] = dataArray.getString(i).substring(15, dataArray.getString(i).length - 1).toDouble()
-                        }
-
-
-                        if (isVisible) {
-                            updateUI()
-                        }
-                    }
-                }
-        )
-
-         */
     }
 
     private fun getBalance() {
@@ -269,7 +234,10 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
             but = true
 
             var amount = ti_amount.editText!!.text.toString()
-            if (currentCurrency == "USD") {
+            if (currentCurrency == CURRENCY.USD) {
+                Log.i("TAG2", "amount $amount")
+                Log.i("TAG2", "amount $ ${getUSD(amount.toBigDecimal())}")
+
                 amount = getUSD(amount.toBigDecimal()).toString()
             }
 
@@ -281,7 +249,7 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
                 }
 
 
-                bidInfoDialog = BidInfoDialog.getInstance(object : IBid {
+                val bidInfoDialog = BidInfoDialog(object : IBid {
                     override fun confirm() {
                         GlobalScope.launch {
                             sendPost(but, amount)
@@ -298,7 +266,7 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
             but = false
 
             var amount = ti_amount.editText!!.text.toString()
-            if (currentCurrency == "USD") {
+            if (currentCurrency == CURRENCY.USD) {
                 amount = getUSD(amount.toBigDecimal()).toString()
             }
             Log.i("TAG", "amount = $amount")
@@ -308,7 +276,8 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
                 if (amount.toDouble() >= balanceTxt) {
                     return@setOnClickListener
                 }
-                bidInfoDialog = BidInfoDialog.getInstance(object : IBid {
+
+                val bidInfoDialog = BidInfoDialog(object : IBid {
                     override fun confirm() {
                         GlobalScope.launch {
                             sendPost(but, amount)
@@ -343,7 +312,7 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
         }
 
 
-        currency_spinner_text.text = currentCurrency
+        currency_spinner_text.text = currentCurrency.name
         currency_spinner.setOnClickListener {
             val popup = PopupMenu(requireContext(), it)
             popup.inflate(R.menu.opt_popup_select_currency)
@@ -351,12 +320,12 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
                 when (item.itemId) {
                     R.id.opt_currency_btc -> {
                         currency_spinner_text.text = item.title
-                        currentCurrency = item.title.toString()
+                        currentCurrency = CURRENCY.BTC
                         true
                     }
                     R.id.opt_currency_usd -> {
                         currency_spinner_text.text = item.title
-                        currentCurrency = item.title.toString()
+                        currentCurrency = CURRENCY.USD
                         true
                     }
                     else -> false
@@ -377,6 +346,7 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
                     R.id.to_5min -> {
                         timeLine = 300.0 * 1000
                     }
+                    /*
                     R.id.to_3hour -> {
                         timeLine = 3600.0 * 1000
                     }
@@ -392,6 +362,8 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
                     R.id.to_all -> {
 
                     }
+
+                     */
                 }
                 updateGraph()
             }
@@ -436,12 +408,12 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
         when (item.itemId) {
             R.id.optDeposit -> {
                 val fTrans = fragmentManager?.beginTransaction()
-                depositDialogFragment.show(fTrans!!, "deposit")
+                DepositDialog(this).show(fTrans!!, "deposit")
                 return true
             }
             R.id.optWithdraw -> {
                 val fTrans = fragmentManager?.beginTransaction()
-                withdrawDialogFragment.show(fTrans!!, "withdraw")
+                WithdrawDialog().show(fTrans!!, "withdraw")
                 return true
             }
             R.id.optHistory -> {
@@ -483,7 +455,7 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
 
     private fun getUSD(v: BigDecimal): BigDecimal {
         val c = optBaseContract.getPriceBitcoin()
-        return (v / c).setScale(8, RoundingMode.HALF_UP)
+        return v.divide(c, 9, RoundingMode.HALF_UP)
     }
 
     private fun updateDATA() {
@@ -586,12 +558,25 @@ open class GraphFragment(private val optBaseContract: IOptBaseContract) :
 
     companion object {
         private var balanceTxt: Float = 0.0F
-        val currencyList: ArrayList<String> = arrayListOf("BTC", "USD")
-        private var currentCurrency: String = "BTC"
+        var currentCurrency: CURRENCY = CURRENCY.BTC
+        enum class CURRENCY{
+            BTC, USD
+        }
+
+        lateinit var optBaseContract: IOptBaseContract
+        fun newInstance(optBaseContract: IOptBaseContract) : GraphFragment{
+            this.optBaseContract = optBaseContract
+            return GraphFragment()
+        }
     }
 
-    override fun send(amount: String) {
-        optBaseContract.deposit(amount)
+    override fun send(amount: String, currency: CURRENCY) {
+        val sendAmount = if (currency == CURRENCY.USD){
+            getUSD(amount.toBigDecimal())
+        }else{
+            amount.toBigDecimal()
+        }
+        optBaseContract.deposit(sendAmount.toPlainString())
     }
 
     override fun send(value: String, wallet: String) {

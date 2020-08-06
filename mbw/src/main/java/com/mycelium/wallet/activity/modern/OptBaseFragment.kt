@@ -59,7 +59,7 @@ open class OptBaseFragment : Fragment(R.layout.fragment_opt_base), IOptBaseContr
         super.onActivityCreated(savedInstanceState)
         toaster = Toaster(this)
 
-        graphFragment = GraphFragment(this)
+        graphFragment = GraphFragment.newInstance(this)
         prepareData = graphFragment
         graphFragment?.let { fragment ->
             childFragmentManager.beginTransaction().add(R.id.opt_root_view, fragment).commit()
